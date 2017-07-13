@@ -1,0 +1,7 @@
+<phpunit colors='true'>
+	<testsuites>
+		<testsuite name="Hashtag Get My Photos">
+			<directory>tests/</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
