@@ -4,8 +4,8 @@
 	"type": "project",
 	"autoload": {
 		"psr-4": {
-			"Factory\\" : "factory/",
-			"Factory\\Products\\" : "factory/products/"
+			"HashTagGetMyPhotos\\Factory\\" : "src/factory/",
+			"HashTagGetMyPhotos\\Products\\" : "src/products/"
 		}
 	},
 	"require-dev": {
