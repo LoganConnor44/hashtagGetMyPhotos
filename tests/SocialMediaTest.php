@@ -1,16 +1,32 @@
 <?php
-use Factory\SocialMediaFactory;
+use HashTagGetMyPhotos\Factory\FactoryProducer as FactoryProducer;
 use PHPUnit\Framework\TestCase;
 
 class SocialMediaTest extends TestCase {
+
+	/**
+	 */
+	public function testMockingObject() {
+		$mock = $this->getMockForAbstractClass(
+			'HashTagGetMyPhotos\Factory\AbstractFactory',
+			$arguments = array('twitter'),
+			$mockClassName = 'AbstractFactory',
+			$callOriginalConstructor = TRUE,
+			$callOriginalClone = TRUE,
+			$callAutoload = TRUE,
+			$mockedMethods = array()
+		);
+	}
 	
-	public function testGetName() {
-		$Twitter = SocialMediaFactory::getPlatform('twitter');
-		$this->assertEquals('Twitter',$Twitter->getName());
+	public function testGetDefinitions() {
+		$definitions = AbstractFactory::getDefinitions();
 	}
 
-	public function testGuzzle() {
-		$Twitter = SocialMediaFactory::getPlatform('twitter');
-		var_dump($Twitter->getResponse());
+	public function testTwitterFactory() {
+		$Factory = FactoryProducer::getFactory('twitter');
+		$Twitter = $Factory->getPlatform();
+		$Twitter->retrieveResponses()
+			->searchForHashtag();
+		var_dump($Twitter->getReponseIds());
 	}
 }

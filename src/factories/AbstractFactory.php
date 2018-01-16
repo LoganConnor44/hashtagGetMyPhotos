@@ -33,7 +33,7 @@ abstract class AbstractFactory {
 	 * @param string $platform
 	 * @return bool
 	 */
-	public static function isGivenShapeValid(string $platform): bool {
+	public static function isGivenPlatformValid(string $platform): bool {
 		$directory = dirname(realpath(dirname(__FILE__))) .'/products';
 		//array_diff() removes the dots that this function picks up
 		$availableClass = array_diff(scandir($directory), array('..', '.'));
@@ -54,7 +54,7 @@ abstract class AbstractFactory {
 	 * @param string $platform
 	 * @return string
 	 */
-	public static function getExpectedFactoryFromShape(string $platform) : string {
+	public static function getExpectedFactoryFromPlatform(string $platform) : string {
 		$definitions = self::getDefinitions();
 		return array_search($platform, $definitions);
 	}
@@ -64,8 +64,9 @@ abstract class AbstractFactory {
 	 * @return array
 	 */
 	public static function getDefinitions() : array {
+		ERROR_REPORTING(E_ALL);
 		$directory = dirname(realpath(dirname(__FILE__))) .'/definitions';
-		$definitions = json_decode(file_get_contents($directory . DIRECTORY_SEPARATOR . 'shapes.json'), TRUE);
+		$definitions = json_decode(file_get_contents($directory . DIRECTORY_SEPARATOR . 'platforms.json'), TRUE);
 		return $definitions;
 	}
 

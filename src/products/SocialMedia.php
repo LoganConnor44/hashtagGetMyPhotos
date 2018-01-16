@@ -1,5 +1,5 @@
 <?php
-namespace Factory\Products;
+namespace HashTagGetMyPhotos\Products;
 
 use GuzzleHttp\Client;
 
