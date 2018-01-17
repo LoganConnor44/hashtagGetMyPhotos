@@ -6,20 +6,29 @@ use HashTagGetMyPhotos\Config\SocialMediaConfig;
 class Twitter extends SocialMedia {
 
 	/**
-	 * object
+	 * All responses from Twitter.
+	 * @var object
 	 */
 	private $Responses;
 
 	/**
-	 * array of int
+	 * The reponse IDs from from each status.
+	 * @var array
 	 */
 	private $responseIds;
 
 	/**
-	 * array
+	 * The configuration for connecting to Twitter.
+	 * @var array
 	 */
 	private $settings;
 	
+	/**
+	 * Defines the name property.
+	 * Defines the reponseId property with an empty array.
+	 * Defines the settings property with appropriate credentials.
+	 * @return void
+	 */
 	public function __construct() {
 		$this->name = 'Twitter';
 		$this->responseIds = array();
@@ -31,6 +40,13 @@ class Twitter extends SocialMedia {
 		);
 	}
 
+	/**
+	 * Searches and sets the Response property if appropriate Tweets are found.
+	 * 
+	 * @param string $hashtag The hashtag to search by.
+	 * 
+	 * @return \HashTagGetMyPhotos\Products\Twitter
+	 */
 	public function retrieveHashtagResponses(string $hashtag) : Twitter {
 		$url = 'https://api.twitter.com/1.1/search/tweets.json';
 		$getfield = '?q=%23' . $hashtag;
@@ -45,6 +61,13 @@ class Twitter extends SocialMedia {
 		return $this;
 	}
 
+	/**
+	 * Searches and sets the Response property if appropriate Tweets are found.
+	 * 
+	 * @param int $id The id to search by.
+	 * 
+	 * @return \HashTagGetMyPhotos\Products\Twitter
+	 */
 	public function retrieveResponseById(int $id) : Twitter {
 		$url = 'https://api.twitter.com/1.1/statuses/show.json';
 		$getfield = '?id=' . $id;
@@ -59,10 +82,20 @@ class Twitter extends SocialMedia {
 		return $this;
 	}
 
+	/**
+	 * Gets the private property Responses.
+	 * 
+	 * @return \stdClass
+	 */
 	public function getResponses() : \stdClass {
 		return $this->Responses;
 	}
 
+	/**
+	 * Gets the private property responseIds.
+	 * 
+	 * @return array
+	 */
 	public function getReponseIds() : array {
 		return $this->responseIds;
 	}
