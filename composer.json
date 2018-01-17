@@ -1,6 +1,6 @@
 {
 	"description": "Retrieves Photos Based On A Hashtag",
-	"name": "Hashtag Get My Photos",
+	"name": "loganconnor44/hashtagGetMyPhotos",
 	"type": "library",
 	"autoload": {
 		"psr-4": {
