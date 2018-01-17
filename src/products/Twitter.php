@@ -3,6 +3,9 @@ namespace HashTagGetMyPhotos\Products;
 
 use HashTagGetMyPhotos\Config\SocialMediaConfig;
 
+/**
+ * A Twitter class that inherits from the SocialMedia interface.
+ */
 class Twitter extends SocialMedia {
 
 	/**
@@ -42,9 +45,9 @@ class Twitter extends SocialMedia {
 
 	/**
 	 * Searches and sets the Response property if appropriate Tweets are found.
-	 * 
+	 *
 	 * @param string $hashtag The hashtag to search by.
-	 * 
+	 *
 	 * @return \HashTagGetMyPhotos\Products\Twitter
 	 */
 	public function retrieveHashtagResponses(string $hashtag) : Twitter {
@@ -63,9 +66,9 @@ class Twitter extends SocialMedia {
 
 	/**
 	 * Searches and sets the Response property if appropriate Tweets are found.
-	 * 
-	 * @param int $id The id to search by.
-	 * 
+	 *
+	 * @param integer $id The id to search by.
+	 *
 	 * @return \HashTagGetMyPhotos\Products\Twitter
 	 */
 	public function retrieveResponseById(int $id) : Twitter {
@@ -84,7 +87,7 @@ class Twitter extends SocialMedia {
 
 	/**
 	 * Gets the private property Responses.
-	 * 
+	 *
 	 * @return \stdClass
 	 */
 	public function getResponses() : \stdClass {
@@ -93,7 +96,7 @@ class Twitter extends SocialMedia {
 
 	/**
 	 * Gets the private property responseIds.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getReponseIds() : array {
