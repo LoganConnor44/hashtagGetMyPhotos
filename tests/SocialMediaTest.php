@@ -47,8 +47,8 @@ class SocialMediaTest extends TestCase {
 	public function testGetTweetById() {
 		$Factory = FactoryProducer::getFactory('twitter');
 		$Twitter = $Factory->getPlatform();
-		$Twitter->retrieveResponseById(953397999593508865);
-		$this->assertTrue(is_int($Twitter->getResponses()->id));
+		$Tweet = $Twitter->retrieveResponseById(953397999593508865);
+		$this->assertTrue(is_int($Tweet->id));
 	}
 
 	/**
@@ -75,6 +75,26 @@ class SocialMediaTest extends TestCase {
 		$Twitter->retrieveHashtagResponses('goingSparrow')
 			->saveResponseIds()
 			->doesMediaExist();
-		var_dump($Twitter->getResponseIds());
+		foreach ($Twitter->getResponseIds() as $response) {
+			$this->assertTrue(is_bool($response));
+		}
+	}
+
+	/**
+	 * Verifies that the mediaFile property is an array made up of integer key and a string value.
+	 *
+	 * @return void
+	 */
+	public function testSaveMediaFiles() {
+		$Factory = FactoryProducer::getFactory('twitter');
+		$Twitter = $Factory->getPlatform();
+		$Twitter->retrieveHashtagResponses('goingSparrow')
+			->saveResponseIds()
+			->doesMediaExist()
+			->saveMediaFiles();
+		foreach ($Twitter->getMediaFiles() as $id => $file) {
+			$this->assertTrue(is_int($id));
+			$this->assertTrue(is_string($file));
+		}
 	}
 }

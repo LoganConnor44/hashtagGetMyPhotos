@@ -21,6 +21,12 @@ class Twitter extends SocialMedia {
 	private $responseIds;
 
 	/**
+	 * The image files for appropriate Tweets.
+	 * @var array
+	 */
+	private $mediaFiles;
+
+	/**
 	 * The configuration for connecting to Twitter.
 	 * @var array
 	 */
@@ -35,6 +41,7 @@ class Twitter extends SocialMedia {
 	public function __construct() {
 		$this->name = 'Twitter';
 		$this->responseIds = array();
+		$this->mediaFiles = array();
 		$this->settings = array(
 			'oauth_access_token' => SocialMediaConfig::TWITTER_TOKEN,
 			'oauth_access_token_secret' => SocialMediaConfig::TWITTER_TOKEN_SECRET,
@@ -66,12 +73,15 @@ class Twitter extends SocialMedia {
 
 	/**
 	 * Sets the tweet ID as the property key and the value, initially, to null.
+	 * Sets the Responses property to have the tweet id as the object's key.
 	 *
 	 * @return \HashTagGetMyPhotos\Products\Twitter
 	 */
 	public function saveResponseIds() : Twitter {
-		foreach ($this->Responses->statuses as $tweet) {
+		foreach ($this->Responses->statuses as $dynamicIndex => $tweet) {
 			$this->responseIds[$tweet->id] = NULL;
+			$this->Responses->statuses[$tweet->id] = $tweet;
+			unset($this->Responses->statuses[$dynamicIndex]);
 		}
 		return $this;
 	}
@@ -81,20 +91,18 @@ class Twitter extends SocialMedia {
 	 *
 	 * @param integer $id The id to search by.
 	 *
-	 * @return \HashTagGetMyPhotos\Products\Twitter
+	 * @return \stdClass
 	 */
-	public function retrieveResponseById(int $id) : Twitter {
+	public function retrieveResponseById(int $id) : \stdClass {
 		$url = 'https://api.twitter.com/1.1/statuses/show.json';
 		$getfield = '?id=' . $id;
 		$requestMethod = 'GET';
 		$twitter = new \TwitterAPIExchange($this->settings);
-		$this->Responses = json_decode(
+		return json_decode(
 			$twitter->setGetfield($getfield)
 				->buildOauth($url, $requestMethod)
 				->performRequest()
 		);
-
-		return $this;
 	}
 
 	/**
@@ -104,8 +112,24 @@ class Twitter extends SocialMedia {
 	 */
 	public function doesMediaExist() : Twitter {
 		foreach ($this->responseIds as $idKey => $hasMedia) {
-			$this->retrieveResponseById($idKey);
-			$this->responseIds[$idKey] = property_exists($this->Responses->entities, 'media');
+			$Tweet = $this->retrieveResponseById($idKey);
+			$this->responseIds[$idKey] = property_exists($Tweet->entities, 'media');
+		}
+		return $this;
+	}
+
+	/**
+	 * Iterates through the responseIds and if a media url exists store the $idKey
+	 * and the media_url_https in the property mediaFiles as an array.
+	 *
+	 * @return \HashTagGetMyPhotos\Products\Twitter
+	 */
+	public function saveMediaFiles() : Twitter {
+		foreach ($this->responseIds as $idKey => $hasMedia) {
+			if ($hasMedia) {
+				$this->mediaFiles[$idKey] =
+					$this->Responses->statuses[$idKey]->entities->media[0]->media_url_https;
+			}
 		}
 		return $this;
 	}
@@ -126,5 +150,14 @@ class Twitter extends SocialMedia {
 	 */
 	public function getResponseIds() : array {
 		return $this->responseIds;
+	}
+
+	/**
+	 * Gets the private property mediaFiles
+	 *
+	 * @return array
+	 */
+	public function getMediaFiles() : array {
+		return $this->mediaFiles;
 	}
 }
