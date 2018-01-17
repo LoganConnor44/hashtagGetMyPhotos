@@ -5,7 +5,8 @@
 	"autoload": {
 		"psr-4": {
 			"HashTagGetMyPhotos\\Factory\\" : "src/factories/",
-			"HashTagGetMyPhotos\\Products\\" : "src/products/"
+			"HashTagGetMyPhotos\\Products\\" : "src/products/",
+			"HashTagGetMyPhotos\\Config\\" : "src/config/"
 		}
 	},
 	"require-dev": {

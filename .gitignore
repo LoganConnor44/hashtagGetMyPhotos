@@ -3,3 +3,6 @@ vendor/*
 
 # PHP Intellicense
 .phpintel/*
+
+# Config File
+src/config/SocialMediaConfig.php

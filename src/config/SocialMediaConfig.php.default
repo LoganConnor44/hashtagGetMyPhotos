@@ -1,0 +1,9 @@
+<?php
+namespace HashTagGetMyPhotos\Config;
+
+class SocialMediaConfig {
+	const TWITTER_TOKEN = '';
+	const TWITTER_TOKEN_SECRET = '';
+	const TWITTER_KEY = '';
+	const TWITTER_SECRET = '';
+}
