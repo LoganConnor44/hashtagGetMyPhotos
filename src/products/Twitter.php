@@ -65,6 +65,18 @@ class Twitter extends SocialMedia {
 	}
 
 	/**
+	 * Sets the tweet ID as the property key and the value, initially, to null.
+	 *
+	 * @return \HashTagGetMyPhotos\Products\Twitter
+	 */
+	public function saveResponseIds() : Twitter {
+		foreach ($this->Responses->statuses as $tweet) {
+			$this->responseIds[$tweet->id] = NULL;
+		}
+		return $this;
+	}
+
+	/**
 	 * Searches and sets the Response property if appropriate Tweets are found.
 	 *
 	 * @param integer $id The id to search by.
@@ -86,6 +98,19 @@ class Twitter extends SocialMedia {
 	}
 
 	/**
+	 * Searches responseIds and checks if there is a media property in the given object.
+	 *
+	 * @return \HashTagGetMyPhotos\Products\Twitter
+	 */
+	public function doesMediaExist() : Twitter {
+		foreach ($this->responseIds as $idKey => $hasMedia) {
+			$this->retrieveResponseById($idKey);
+			$this->responseIds[$idKey] = property_exists($this->Responses->entities, 'media');
+		}
+		return $this;
+	}
+
+	/**
 	 * Gets the private property Responses.
 	 *
 	 * @return \stdClass
@@ -99,7 +124,7 @@ class Twitter extends SocialMedia {
 	 *
 	 * @return array
 	 */
-	public function getReponseIds() : array {
+	public function getResponseIds() : array {
 		return $this->responseIds;
 	}
 }

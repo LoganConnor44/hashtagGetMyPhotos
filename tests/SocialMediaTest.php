@@ -50,4 +50,31 @@ class SocialMediaTest extends TestCase {
 		$Twitter->retrieveResponseById(953397999593508865);
 		$this->assertTrue(is_int($Twitter->getResponses()->id));
 	}
+
+	/**
+	 * Verifies that the responseId property is an array.
+	 *
+	 * @return void
+	 */
+	public function testSaveIds() {
+		$Factory = FactoryProducer::getFactory('twitter');
+		$Twitter = $Factory->getPlatform();
+		$Twitter->retrieveHashtagResponses('goingSparrow')
+			->saveResponseIds();
+		$this->assertTrue(is_array($Twitter->getResponseIds()));
+	}
+
+	/**
+	 * Verifies if the responseId property contains any media.
+	 *
+	 * @return void
+	 */
+	public function testHasMedia() {
+		$Factory = FactoryProducer::getFactory('twitter');
+		$Twitter = $Factory->getPlatform();
+		$Twitter->retrieveHashtagResponses('goingSparrow')
+			->saveResponseIds()
+			->doesMediaExist();
+		var_dump($Twitter->getResponseIds());
+	}
 }
