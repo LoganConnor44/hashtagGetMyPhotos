@@ -25,8 +25,16 @@ class SocialMediaTest extends TestCase {
 	public function testTwitterFactory() {
 		$Factory = FactoryProducer::getFactory('twitter');
 		$Twitter = $Factory->getPlatform();
-		$Twitter->retrieveResponses()
-			->searchForHashtag();
-		var_dump($Twitter->getReponseIds());
+		$Twitter->retrieveHashtagResponses();
+			//->searchForHashtag();
+		//var_dump($Twitter->getReponseIds());
+		print_r($Twitter->getResponses());
+	}
+
+	public function testGetTweetById() {
+		$Factory = FactoryProducer::getFactory('twitter');
+		$Twitter = $Factory->getPlatform();
+		$Twitter->retrieveResponseById(953397999593508865);
+		print_r($Twitter->getResponses());
 	}
 }
