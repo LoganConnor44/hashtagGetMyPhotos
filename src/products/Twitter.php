@@ -147,7 +147,7 @@ class Twitter extends SocialMedia {
 	 *
 	 * @return \HashTagGetMyPhotos\Products\Twitter
 	 */
-	public function saveTweetWithMedia() : Twitter {
+	public function saveTweetsWithMedia() : Twitter {
 		foreach ($this->responseIds as $idKey => $hasMedia) {
 			if ($hasMedia) {
 				$this->tweetsWithMedia[$idKey] =
