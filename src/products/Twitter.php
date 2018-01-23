@@ -183,4 +183,13 @@ class Twitter extends SocialMedia {
 	public function getMediaFiles() : array {
 		return $this->mediaFiles;
 	}
+
+	/**
+	 * Gets the private property tweetsWithMedia
+	 *
+	 * @return array
+	 */
+	public function getTweetsWithMedia() : array {
+		return $this->tweetsWithMedia;
+	}
 }
