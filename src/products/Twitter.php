@@ -27,6 +27,12 @@ class Twitter extends SocialMedia {
 	private $mediaFiles;
 
 	/**
+	 * The full response for appropriate Tweets with media.
+	 * @var array
+	 */
+	private $tweetsWithMedia;
+
+	/**
 	 * The configuration for connecting to Twitter.
 	 * @var array
 	 */
@@ -42,6 +48,7 @@ class Twitter extends SocialMedia {
 		$this->name = 'Twitter';
 		$this->responseIds = array();
 		$this->mediaFiles = array();
+		$this->tweetsWithMedia = array();
 		$this->settings = array(
 			'oauth_access_token' => SocialMediaConfig::TWITTER_TOKEN,
 			'oauth_access_token_secret' => SocialMediaConfig::TWITTER_TOKEN_SECRET,
@@ -129,6 +136,22 @@ class Twitter extends SocialMedia {
 			if ($hasMedia) {
 				$this->mediaFiles[$idKey] =
 					$this->Responses->statuses[$idKey]->entities->media[0]->media_url_https;
+			}
+		}
+		return $this;
+	}
+
+	/**
+	 * Iterates through the responseIds and if a media url exists store the $idKey
+	 * and the entire tweet in the property tweetsWithMedia as an array.
+	 *
+	 * @return \HashTagGetMyPhotos\Products\Twitter
+	 */
+	public function saveTweetWithMedia() : Twitter {
+		foreach ($this->responseIds as $idKey => $hasMedia) {
+			if ($hasMedia) {
+				$this->tweetsWithMedia[$idKey] =
+					$this->Responses->statuses[$idKey];
 			}
 		}
 		return $this;
