@@ -65,8 +65,8 @@ class Twitter extends SocialMedia {
 	 * @return \HashTagGetMyPhotos\Products\Twitter
 	 */
 	public function retrieveHashtagResponses(string $hashtag) : Twitter {
-		$url = 'https://api.twitter.com/1.1/search/tweets.json';
-		$getfield = '?q=%23' . $hashtag;
+		$url = "https://api.twitter.com/1.1/search/tweets.json";
+		$getfield = "?q=%23" . $hashtag;
 		$requestMethod = 'GET';
 		$twitter = new \TwitterAPIExchange($this->settings);
 		$this->Responses = json_decode(
@@ -150,7 +150,7 @@ class Twitter extends SocialMedia {
 	public function saveTweetsWithMedia() : Twitter {
 		foreach ($this->responseIds as $idKey => $hasMedia) {
 			if ($hasMedia) {
-				$this->tweetsWithMedia[$idKey] =
+				$this->tweetsWithMedia[(int) $idKey] =
 					$this->Responses->statuses[$idKey];
 			}
 		}

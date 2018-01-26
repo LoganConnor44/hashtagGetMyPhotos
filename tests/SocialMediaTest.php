@@ -97,4 +97,22 @@ class SocialMediaTest extends TestCase {
 			$this->assertTrue(is_string($file));
 		}
 	}
+
+	/**
+	 * Verifies that the mediaFile property is an array made up of integer key and a string value.
+	 *
+	 * @return void
+	 */
+	public function testSaveTweetsWithMedia() {
+		$Factory = FactoryProducer::getFactory('twitter');
+		$Twitter = $Factory->getPlatform();
+		$Twitter->retrieveHashtagResponses('goingSparrow')
+			->saveResponseIds()
+			->doesMediaExist()
+			->saveTweetsWithMedia();
+		foreach ($Twitter->getTweetsWithMedia() as $id => $tweet) {
+			$this->assertTrue(is_int($id));
+			$this->assertTrue(is_object($tweet));
+		}
+	}
 }
